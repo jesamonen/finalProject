@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover places, plan trips, and explore the beauty of Nigeria with Naija Explorer.">
+  <title>Naija Explorer | Discover Nigeria</title>
+  <link rel="preconnect" href="https://images.unsplash.com"><link rel="stylesheet" href="/css/styles.css">
+  <script type="module" src="/js/main.js"></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="#home" aria-label="Naija Explorer home"><span class="brand-mark">N</span><span>Naija<span class="brand-accent">Explorer</span></span></a>
+    <nav aria-label="Main navigation"><a href="#discover">Discover</a><a href="#planner">Trip planner</a><a href="#tools">Travel tools</a></nav>
+    <a class="header-cta" href="#planner">Plan a trip <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="hero" id="home"><div class="hero-shade"></div><div class="hero-content"><p class="eyebrow"><span class="eyebrow-dot"></span> YOUR NEXT ADVENTURE STARTS HERE</p>
+      <h1>Find your own<br><em>side of Nigeria.</em></h1><p class="hero-copy">From quiet waterfalls to vibrant city streets, discover the places and experiences that make Nigeria unforgettable.</p>
+      <a class="primary-button" href="#discover">Explore destinations <span aria-hidden="true">↓</span></a>
+      <div class="hero-note"><span class="mini-flag">🇳🇬</span><span>36 states. Countless stories.</span></div>
+    </div><div class="hero-bottom"><span>EXPLORE BEYOND THE EXPECTED</span><span>06° 27′ N&nbsp;&nbsp; 03° 24′ E</span></div></section>
+
+    <section class="section discover-section" id="discover"><div class="section-heading"><div><p class="eyebrow dark-eyebrow">THE DISCOVERY GUIDE</p><h2>Where will you <em>wander?</em></h2></div><p class="section-intro">Find a place for your next weekend escape, cultural journey, or outdoor adventure.</p></div>
+      <div class="search-panel"><label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search places, states, or experiences" aria-label="Search destinations"><button id="clear-search" type="button" aria-label="Clear search">×</button></label>
+        <label class="filter-label" for="category-filter">EXPERIENCE<select id="category-filter"><option value="all">All experiences</option><option value="Nature">Nature & outdoors</option><option value="Culture">Culture & heritage</option><option value="City">City escapes</option><option value="Beach">Beaches & coast</option></select></label>
+        <label class="filter-label" for="state-filter">STATE<select id="state-filter"><option value="all">All states</option></select></label>
+      </div>
+      <div class="results-line"><p id="results-count" aria-live="polite">Loading destinations…</p><button class="text-button" id="show-favorites" type="button">♡ Saved places <span id="favorite-count">0</span></button></div>
+      <div class="destination-grid" id="destination-grid"></div><p id="empty-state" class="empty-state" hidden>No destinations match those filters. Try a different search.</p>
+    </section>
+
+    <section class="planner-section" id="planner"><div class="planner-copy"><p class="eyebrow">MAKE IT YOURS</p><h2>Your journey,<br><em>your way.</em></h2><p>Build a simple itinerary from the places you love. Add stops, estimate your budget, and keep your plan in this browser.</p><div class="planner-stat"><strong id="itinerary-count">0</strong><span>destinations in your itinerary</span></div></div>
+      <div class="itinerary-card"><div class="itinerary-head"><div><p class="eyebrow dark-eyebrow">YOUR TRIP BOARD</p><h3>My itinerary</h3></div><button id="clear-itinerary" class="text-button" type="button">Clear all</button></div><ol id="itinerary-list" class="itinerary-list"><li class="itinerary-empty">Your trip starts with a place that inspires you.</li></ol><div class="budget-row"><label for="budget-input">Estimated total budget <span>₦</span><input id="budget-input" type="number" min="0" step="1000" placeholder="e.g. 150000"></label><div class="budget-result"><small>YOUR BUDGET</small><strong id="budget-display">₦0</strong></div></div><button id="export-itinerary" class="primary-button full-button" type="button">Download itinerary <span aria-hidden="true">↓</span></button></div>
+    </section>
+
+    <section class="section tools-section" id="tools"><div class="section-heading"><div><p class="eyebrow dark-eyebrow">TRAVEL SMARTER</p><h2>A few useful <em>tools.</em></h2></div><p class="section-intro">Small helpers to make planning your next Nigerian adventure easier.</p></div>
+      <div class="tools-grid"><article class="tool-card"><div class="tool-icon">⌖</div><p class="eyebrow dark-eyebrow">FIND A PLACE</p><h3>Location lookup</h3><p>Look up an address or landmark and get its coordinates.</p><form id="location-form" class="tool-form"><input id="location-input" type="text" placeholder="e.g. Olumo Rock, Abeokuta" aria-label="Location to look up" required><button type="submit" class="dark-button">Find location</button></form><p id="location-result" class="tool-result" aria-live="polite"></p></article>
+      <article class="tool-card"><div class="tool-icon">₦</div><p class="eyebrow dark-eyebrow">CURRENCY CONVERTER</p><h3>Know your numbers</h3><p>Get an indicative conversion for your travel spending.</p><form id="currency-form" class="tool-form"><input id="currency-amount" type="number" min="0" step="any" value="10000" aria-label="Amount to convert" required><div class="currency-selects"><select id="currency-from" aria-label="Convert from"><option value="NGN">NGN ₦</option><option value="USD">USD $</option><option value="GBP">GBP £</option><option value="EUR">EUR €</option></select><span>→</span><select id="currency-to" aria-label="Convert to"><option value="USD">USD $</option><option value="NGN">NGN ₦</option><option value="GBP">GBP £</option><option value="EUR">EUR €</option></select></div><button type="submit" class="dark-button">Convert amount</button></form><p id="currency-result" class="tool-result" aria-live="polite">Rates are indicative and may change.</p></article></div>
+    </section>
+    <section class="closing-banner"><p class="eyebrow">THE BEAUTY IS CLOSER THAN YOU THINK</p><h2>Go find your <em>somewhere.</em></h2><a class="primary-button" href="#discover">Discover Nigeria <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">N</span><span>Naija<span class="brand-accent">Explorer</span></span></a><p>Made for curious travellers. Explore Nigeria with respect, care, and an open mind.</p><span>© <span id="year"></span> Naija Explorer</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
