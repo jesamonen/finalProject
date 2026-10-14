@@ -1,31 +1,68 @@
-import express from 'express';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Keep geocoding on the server so the browser can send a clear User-Agent.
-app.get('/api/geocode', async (req, res) => {
-  const q = String(req.query.q || '').trim();
-  if (!q) return res.status(400).json({ error: 'Please provide a place to search for.' });
-  try {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(q)}`, {
-      headers: { 'User-Agent': 'NaijaExplorer/1.0 (educational travel project)' }
-    });
-    if (!response.ok) throw new Error('Location provider returned an error.');
-    const results = await response.json();
-    if (!results.length) return res.status(404).json({ error: 'No matching location was found.' });
-    res.json({ name: results[0].display_name, lat: Number(results[0].lat), lon: Number(results[0].lon) });
-  } catch (error) {
-    res.status(502).json({ error: 'Location search is temporarily unavailable.' });
+const publicDirectory = path.join(__dirname, "public");
+const port = process.env.PORT || 3000;
+
+const mimeTypes = {
+  ".html": "text/html",
+  ".css": "text/css",
+  ".js": "text/javascript",
+  ".json": "application/json",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".svg": "image/svg+xml",
+  ".ico": "image/x-icon",
+  ".webp": "image/webp",
+};
+
+const server = http.createServer((req, res) => {
+  const pathname = new URL(
+    req.url,
+    `http://${req.headers.host || "localhost"}`
+  ).pathname;
+
+  const requestedPath =
+    pathname === "/" ? "index.html" : pathname.slice(1);
+
+  const filePath = path.resolve(publicDirectory, requestedPath);
+
+  // Prevent requests from accessing files outside public/.
+  if (
+    filePath !== publicDirectory &&
+    !filePath.startsWith(publicDirectory + path.sep)
+  ) {
+    res.writeHead(403);
+    res.end("Forbidden");
+    return;
   }
+
+  fs.readFile(filePath, (error, content) => {
+    if (error) {
+      res.writeHead(error.code === "ENOENT" ? 404 : 500, {
+        "Content-Type": "text/plain; charset=utf-8",
+      });
+      res.end(error.code === "ENOENT" ? "Page not found" : "Server error");
+      return;
+    }
+
+    const extension = path.extname(filePath).toLowerCase();
+
+    res.writeHead(200, {
+      "Content-Type": mimeTypes[extension] || "application/octet-stream",
+    });
+
+    res.end(content);
+  });
 });
 
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', app: 'Naija Explorer' }));
-app.get('*', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
-app.listen(PORT, () => console.log(`Naija Explorer is running at http://localhost:${PORT}`));
+server.listen(port, () => {
+  console.log(`Naija Explorer running at http://localhost:${port}`);
+});
